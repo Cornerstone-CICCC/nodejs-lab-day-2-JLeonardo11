@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+	
+
+</Layout>
+
+<script>
+	const btnGet = document.querySelector("#btn-get-cookie") as HTMLButtonElement
+	const btnRead = document.querySelector("#btn-read-cookie") as HTMLButtonElement
+
+	const getCookie = async () => {
+		const res = await fetch(`http://localhost:4321/set-cookie`, {
+			method: "GET",
+			credentials: "include" // send/receive cookies
+		})
+		if (!res.ok) {
+			console.error("Something went wrong!")
+			return
+		}
+		const data = await res.json()
+		return data
+	}
+
+	const readCookie = async () => {
+		const res = await fetch(`http://localhost:4321/check-cookie`, {
+			method: "GET",
+			credentials: "include" // send/receive cookies
+		})
+		if (!res.ok) {
+			console.error("Something went wrong!")
+			return
+		}
+		const data = await res.json()
+		return data
+	}
+
+	btnGet?.addEventListener('click', async () => {
+		const data = await getCookie()
+		console.log(data)
+	})
+
+	btnRead?.addEventListener('click', async () => {
+		const data = await readCookie()
+		console.log(data)
+	})
+</script>

@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+<h1>Log In</h1>
+  <form action="/users/login" method="POST">
+    <label>
+      Username:
+      <input type="text" name="username" placeholder="Enter username" required>
+    </label>
+    <label>
+      Password:
+      <input type="password" name="password" placeholder="Enter password" required>
+    </label>
+    <button type="submit">Log In</button>
+  </form>    
+
+</Layout>
+<script>
+	
+	const getCookie = async () => {
+		const res = await fetch(`http://localhost:4321/set-cookie`, {
+			method: "GET",
+			credentials: "include" // send/receive cookies
+		})
+		if (!res.ok) {
+			console.error("Something went wrong!")
+			return
+		}
+		const data = await res.json()
+		return data
+	}
+
+	const readCookie = async () => {
+		const res = await fetch(`http://localhost:4321/check-cookie`, {
+			method: "GET",
+			credentials: "include" // send/receive cookies
+		})
+		if (!res.ok) {
+			console.error("Something went wrong!")
+			return
+		}
+		const data = await res.json()
+		return data
+	}
+
+	
+</script>

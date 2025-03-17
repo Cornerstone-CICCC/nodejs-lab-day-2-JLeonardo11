@@ -1,0 +1,54 @@
+<h1>Create Account</h1>
+<form id="register-form">
+  <label>
+    Username:
+    <input type="text" name="username" placeholder="Enter username" required>
+  </label>
+  <label>
+    Password:
+    <input type="password" name="password" placeholder="Enter password" required>
+  </label>
+  <label>
+    First Name:
+    <input type="text" name="firstname" placeholder="Enter first name" required>
+  </label>
+  <label>
+    Last Name:
+    <input type="text" name="lastname" placeholder="Enter last name" required>
+  </label>
+  <button type="submit">Sign Up</button>
+</form>
+<p id="message"></p>
+
+  <script>
+    const registerForm = document.getElementById("register-form");
+    registerForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target as HTMLFormElement);
+      const userData = {
+        username: formData.get("username"),
+        password: formData.get("password"),
+        firstname: formData.get("firstname"),
+        lastname: formData.get("lastname"),
+      };
+  
+      const response = await fetch("http://localhost:4321/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+        credentials: "include", // To send cookies with the request
+      });
+  
+      const data = await response.json();
+      const messageElement = document.getElementById("message");
+      if (messageElement) {
+        messageElement.textContent = data.message || "Registration successful!";
+      }
+      
+      if (response.ok) {
+        window.location.href = "/login"; // Redirect to login after success
+      }
+    });
+  </script>
+  
